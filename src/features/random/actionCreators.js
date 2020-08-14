@@ -13,16 +13,19 @@ const useActions = (ajaxType = 'ASYNC') => {
   const getRandomNumber = useCallback(
     async (customCallback = null, max = '100') => {
       if (ajaxType === 'SYNC') {
-        dispatch({
+        const tempResponse = await dispatch({
           type: GET_RANDOM_NUMBER,
           payload: axiosGetSync(GET_RANDOM_NUMBER_URL('1', max, 'plain')), // sync type call
         });
+        return tempResponse;
       } else {
         // ASYNC
         axiosGet(GET_RANDOM_NUMBER_URL('1', max, 'plain')).then(res => {
-          dispatch({
+          const response = dispatch({
             type: GET_RANDOM_NUMBER,
-            payload: res,
+            payload: new Promise((resolve, reject) => {
+              resolve(res);
+            }),
           });
           if (customCallback) customCallback(res);
         });

@@ -25,14 +25,12 @@ const Random = () => {
 
   const onClickAsyncButton = () => {
     getRanNumAsync(asyncCustomCallback, '100');
-    console.log('Async Request Done');
   };
 
   const asyncCustomCallback = useCallback(res => {
-    console.log('Async Response Done and Callback');
     setTimeout(() => {
       setStateNumber(res.data + 100);
-    }, 3000);
+    }, 1500);
   }, []);
   /** ASYNC customCallback 처리 예 끝 */
 
@@ -40,8 +38,8 @@ const Random = () => {
   const syncCustomCallback = useCallback(res => {}, []);
 
   const onClickSyncButton = useCallback(async () => {
-    const response = await getRanNumSync(syncCustomCallback, '50');
-    console.log('SYNC response : ', response);
+    const tempResponse = await getRanNumSync(syncCustomCallback, '50');
+    console.log('SYNC response : ', tempResponse);
 
     // dispatch의 상태 변화 읽는 방법이 가장 정확하지만 SYNC AWAIT 방식에 맞지 않다.
   }, [getRanNumSync, syncCustomCallback]);
