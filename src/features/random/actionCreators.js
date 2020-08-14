@@ -8,8 +8,8 @@ const useActions = (ajaxType = 'ASYNC') => {
 
   if (ajaxType !== 'SYNC' && ajaxType !== 'ASYNC') throw new Error();
 
-  /**USAGE SYNC: let val = await getRandomNumber(null, '50') */
-  /**USAGE ASYNC: getRandomNumber(customCallback, '100') */
+  /**USAGE SYNC: let val = await getRandomNumber('50') */
+  /**USAGE ASYNC: getRandomNumber('100') */
   const getRandomNumber = useCallback(
     async (max = '100') => {
       if (ajaxType === 'SYNC') {

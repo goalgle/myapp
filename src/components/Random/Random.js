@@ -9,35 +9,24 @@ const Random = () => {
   /**STORE - useSelector*/
   const {number, isLoading, hasError, isFulfilled} = useRandomStore();
 
-  /**ACTION - useDispatch, axios*/
-  const {getRandomNumber: getRanNumSync} = useRandomActions('SYNC');
-  const {getRandomNumber: getRanNumAsync} = useRandomActions('ASYNC');
-
   /** Define pristine state condition, when user didn't do any actions */
   const isPristine = !isLoading && !hasError && !isFulfilled;
 
-  /** 리덕스의 값이 아닌 페이지의 state 변수로 별도 처리하기 위해 ASYNC 호출 후 customCallback 처리 */
-  const [stateNumber, setStateNumber] = useState(number);
+  /**ACTION - You can choose mode : SYNC or ASYNC*/
+  const {getRandomNumber: getRanNumSync} = useRandomActions('SYNC');
+  const {getRandomNumber: getRanNumAsync} = useRandomActions('ASYNC');
 
-  useEffect(() => {
-    setStateNumber(number);
-  }, [number]);
-
+  /**WITH ASYNC MODE : PROMISE */
   const onClickAsyncButton = () => {
     getRanNumAsync('100').then(res => {
-      setTimeout(() => {
-        setStateNumber(res.data + 100);
-      }, 1500);
+      alert(res.data + 100);
     });
   };
-  /** ASYNC customCallback 처리 예 끝 */
 
-  /** SYNC 의 경우도 redux 값을 사용할 경우 비동기 처리되어 값이 즉각 반영되지 않을수도 있다??  */
+  /**WITH SYNC MODE */
   const onClickSyncButton = useCallback(async () => {
     const tempResponse = await getRanNumSync('50');
     console.log('SYNC response : ', tempResponse);
-
-    // dispatch의 상태 변화 읽는 방법이 가장 정확하지만 SYNC AWAIT 방식에 맞지 않다.
   }, [getRanNumSync]);
 
   return (
@@ -61,7 +50,7 @@ const Random = () => {
       {isLoading && <div>Getting number</div>}
       {isFulfilled && (
         <div>
-          Number from random.org: <strong>{stateNumber}</strong>
+          Number from random.org: <strong>{number}</strong>
         </div>
       )}
       {hasError && <div>Ups...</div>}
