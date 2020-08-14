@@ -24,25 +24,21 @@ const Random = () => {
   }, [number]);
 
   const onClickAsyncButton = () => {
-    getRanNumAsync(asyncCustomCallback, '100');
+    getRanNumAsync('100').then(res => {
+      setTimeout(() => {
+        setStateNumber(res.data + 100);
+      }, 1500);
+    });
   };
-
-  const asyncCustomCallback = useCallback(res => {
-    setTimeout(() => {
-      setStateNumber(res.data + 100);
-    }, 1500);
-  }, []);
   /** ASYNC customCallback 처리 예 끝 */
 
   /** SYNC 의 경우도 redux 값을 사용할 경우 비동기 처리되어 값이 즉각 반영되지 않을수도 있다??  */
-  const syncCustomCallback = useCallback(res => {}, []);
-
   const onClickSyncButton = useCallback(async () => {
-    const tempResponse = await getRanNumSync(syncCustomCallback, '50');
+    const tempResponse = await getRanNumSync('50');
     console.log('SYNC response : ', tempResponse);
 
     // dispatch의 상태 변화 읽는 방법이 가장 정확하지만 SYNC AWAIT 방식에 맞지 않다.
-  }, [getRanNumSync, syncCustomCallback]);
+  }, [getRanNumSync]);
 
   return (
     <div className={classes.counter}>
