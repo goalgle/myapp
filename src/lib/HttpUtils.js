@@ -163,7 +163,7 @@ export async function axiosGetSync(url, isWait = false, cancelToken = null) {
     // res = await axios.get(url, option);
     res = await axios.get(url);
   } catch (err) {
-    return err;
+    throw new Error(err);
   }
 
   toggleWait();

@@ -1,4 +1,4 @@
-import {useCallback, useState, useEffect} from 'react';
+import {useCallback} from 'react';
 import {useDispatch} from 'react-redux';
 import {GET_RANDOM_NUMBER, GET_RANDOM_NUMBER_URL} from './actionTypes';
 import {axiosGet, axiosGetSync} from '../../lib/HttpUtils';
@@ -8,8 +8,8 @@ const useActions = (ajaxType = 'ASYNC') => {
 
   if (ajaxType !== 'SYNC' && ajaxType !== 'ASYNC') throw new Error();
 
-  /**USAGE SYNC: let val = await getRandomNumber('50') */
-  /**USAGE ASYNC: getRandomNumber('100') */
+  /**SYNC USAGE : let val = await getRandomNumber('50') */
+  /**ASYNC USAGE : getRandomNumber('100') */
   const getRandomNumber = useCallback(
     async (max = '100') => {
       if (ajaxType === 'SYNC') {

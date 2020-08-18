@@ -1,10 +1,9 @@
-import React, {useState, useEffect, useCallback} from 'react';
+import React, {useCallback} from 'react';
 import {
   useActions as useRandomActions,
   useRandomAPI as useRandomStore,
 } from '../../features/random';
 import classes from './Random.module.css';
-import {returnRejectedPromiseOnError} from 'redux-axios-middleware';
 
 const Random = () => {
   /**STORE - useSelector*/
@@ -19,15 +18,30 @@ const Random = () => {
 
   /**WITH ASYNC MODE : PROMISE */
   const onClickAsyncButton = () => {
-    getRandomNumByAsync('100').then(res => {
-      console.log('ASYNC response : ', res);
-    });
+    getRandomNumByAsync('100')
+      .then(res => getRandomNumByAsync(res.data))
+      .then(res => getRandomNumByAsync(res.data))
+      .then(res => getRandomNumByAsync(res.data));
+
+    // Promise.all([
+    //   getRandomNumByAsync('100'),
+    //   getRandomNumByAsync('50'),
+    //   getRandomNumByAsync('10'),
+    // ]).then(() => {
+    //   alert('all done');
+    // });
   };
 
   /**WITH SYNC MODE */
   const onClickSyncButton = useCallback(async () => {
-    const res = await getRandomNumBySync('50');
-    console.log('SYNC response : ', res);
+    let res = await getRandomNumBySync('100');
+    console.log('SYNC TEST ', res.value.data);
+    res = await getRandomNumBySync(res.value.data);
+    console.log('SYNC TEST ', res.value.data);
+    res = await getRandomNumBySync(res.value.data);
+    console.log('SYNC TEST ', res.value.data);
+    res = await getRandomNumBySync(res.value.data);
+    console.log('SYNC TEST ', res.value.data);
   }, [getRandomNumBySync]);
 
   return (
