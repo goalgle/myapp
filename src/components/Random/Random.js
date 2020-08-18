@@ -4,6 +4,7 @@ import {
   useRandomAPI as useRandomStore,
 } from '../../features/random';
 import classes from './Random.module.css';
+import {returnRejectedPromiseOnError} from 'redux-axios-middleware';
 
 const Random = () => {
   /**STORE - useSelector*/
@@ -13,21 +14,21 @@ const Random = () => {
   const isPristine = !isLoading && !hasError && !isFulfilled;
 
   /**ACTION - You can choose mode : SYNC or ASYNC*/
-  const {getRandomNumber: getRanNumSync} = useRandomActions('SYNC');
-  const {getRandomNumber: getRanNumAsync} = useRandomActions('ASYNC');
+  const {getRandomNumber: getRandomNumBySync} = useRandomActions('SYNC');
+  const {getRandomNumber: getRandomNumByAsync} = useRandomActions('ASYNC');
 
   /**WITH ASYNC MODE : PROMISE */
   const onClickAsyncButton = () => {
-    getRanNumAsync('100').then(res => {
-      alert(res.data + 100);
+    getRandomNumByAsync('100').then(res => {
+      console.log('ASYNC response : ', res);
     });
   };
 
   /**WITH SYNC MODE */
   const onClickSyncButton = useCallback(async () => {
-    const tempResponse = await getRanNumSync('50');
-    console.log('SYNC response : ', tempResponse);
-  }, [getRanNumSync]);
+    const res = await getRandomNumBySync('50');
+    console.log('SYNC response : ', res);
+  }, [getRandomNumBySync]);
 
   return (
     <div className={classes.counter}>
