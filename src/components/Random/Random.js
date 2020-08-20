@@ -13,11 +13,11 @@ const Random = () => {
   /** Define pristine state condition, when user didn't do any actions */
   const isPristine = !isLoading && !hasError && !isFulfilled;
 
-  /** GET ACTION - LOADING BAR or NOT*/
+  /** GET REDUX ACTION - LOADING BAR or NOT*/
   const {getRandomNumber: getRandomNumWithBlock} = useRandomActions(true);
   const {getRandomNumber: getRandomNum} = useRandomActions();
 
-  /** SET ACTION - COMMON TYPE */
+  /** SET REDUX ACTION */
   const {setTargetState} = useRandomActions();
 
   /** PAGE STATE */
