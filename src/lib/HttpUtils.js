@@ -163,6 +163,7 @@ export async function axiosGetSync(url, isWait = false, cancelToken = null) {
     // res = await axios.get(url, option);
     res = await axios.get(url);
   } catch (err) {
+    console.log(err);
     throw new Error(err);
   }
 

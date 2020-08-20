@@ -1,25 +1,23 @@
 import {useCallback} from 'react';
 import {useDispatch} from 'react-redux';
-import {GET_RANDOM_NUMBER, GET_RANDOM_NUMBER_URL} from './actionTypes';
+import {
+  GET_RANDOM_NUMBER,
+  GET_RANDOM_NUMBER_URL,
+  SET_STATE,
+} from './actionTypes';
 import {axiosGet, axiosGetSync} from '../../lib/HttpUtils';
 
-const useActions = (ajaxType = 'ASYNC') => {
+const useActions = (useBlockSync = false) => {
   const dispatch = useDispatch();
 
-  if (ajaxType !== 'SYNC' && ajaxType !== 'ASYNC') throw new Error();
-
-  /**SYNC USAGE : let val = await getRandomNumber('50') */
-  /**ASYNC USAGE : getRandomNumber('100') */
   const getRandomNumber = useCallback(
     async (max = '100') => {
-      if (ajaxType === 'SYNC') {
-        const syncResponse = await dispatch({
+      if (useBlockSync) {
+        return await dispatch({
           type: GET_RANDOM_NUMBER,
           payload: axiosGetSync(GET_RANDOM_NUMBER_URL('1', max, 'plain')), // sync type call
         });
-        return syncResponse;
       } else {
-        // ASYNC
         return new Promise((resolve, reject) => {
           axiosGet(GET_RANDOM_NUMBER_URL('1', max, 'plain')).then(res => {
             dispatch({
@@ -33,10 +31,22 @@ const useActions = (ajaxType = 'ASYNC') => {
         });
       }
     },
-    [ajaxType, dispatch]
+    [useBlockSync, dispatch]
   );
 
-  return {getRandomNumber};
+  const setTargetState = useCallback(
+    e => {
+      const {id, value} = e.target;
+      dispatch({
+        type: SET_STATE,
+        payload: {target: id, data: value},
+      });
+      return value;
+    },
+    [dispatch]
+  );
+
+  return {getRandomNumber, setTargetState};
 };
 
 export default useActions;

@@ -1,5 +1,7 @@
-export const GET_RANDOM_NUMBER = 'GET_RANDOM_NUMBER';
+/**COMMON ACTION TYPE */
+export const SET_STATE = 'SET_STATE';
 
+export const GET_RANDOM_NUMBER = 'GET_RANDOM_NUMBER';
 export const GET_RANDOM_NUMBER_URL = (
   min = '1',
   max = '99',
