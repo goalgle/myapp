@@ -18,10 +18,10 @@ const Random = () => {
   const {getRandomNumber: getRandomNum} = useRandomActions();
 
   /** SET REDUX ACTION */
-  const {setTargetState} = useRandomActions();
+  const {changeStore} = useRandomActions();
 
   /** PAGE STATE */
-  const [age, setAge] = useState(10);
+  const [myage, setMyage] = useState(10);
   const [name, setName] = useState('홍길동');
 
   /** NORMAL ASYNC MODE WITH PROMISE */
@@ -48,19 +48,7 @@ const Random = () => {
   }, [getRandomNumWithBlock]);
 
   /**UPDATE REDUX STORE AND PAGE STATE */
-  const onChangeAge = useCallback(
-    e => {
-      setAge(setTargetState(e));
-    },
-    [setTargetState]
-  );
-
-  const onChangeName = useCallback(
-    e => {
-      setName(setTargetState(e));
-    },
-    [setTargetState]
-  );
+  // 코드를 태그안에 직접 정의 : state setter 와 id가 겹쳐서 효율적
 
   return (
     <div className={classes.counter}>
@@ -89,10 +77,24 @@ const Random = () => {
       )}
       {hasError && <div>Ups...</div>}
       나이:
-      <input id="age" type="text" value={age} onChange={onChangeAge}></input>
+      <input
+        id="myage"
+        type="text"
+        value={myage}
+        onChange={e => {
+          /**UPDATE REDUX STORE AND PAGE STATE */
+          setMyage(changeStore(e));
+        }}></input>
       <p />
       이름:
-      <input id="name" type="text" value={name} onChange={onChangeName}></input>
+      <input
+        id="name"
+        type="text"
+        value={name}
+        onChange={e => {
+          /**UPDATE REDUX STORE AND PAGE STATE */
+          setName(changeStore(e));
+        }}></input>
     </div>
   );
 };

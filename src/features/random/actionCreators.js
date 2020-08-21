@@ -7,6 +7,13 @@ import {
 } from './actionTypes';
 import {axiosGet, axiosGetSync} from '../../lib/HttpUtils';
 
+/** action prefix
+ *  get
+ *  change
+ *  add
+ *  delete
+ */
+
 const useActions = (useBlockSync = false) => {
   const dispatch = useDispatch();
 
@@ -34,7 +41,7 @@ const useActions = (useBlockSync = false) => {
     [useBlockSync, dispatch]
   );
 
-  const setTargetState = useCallback(
+  const changeStore = useCallback(
     e => {
       const {id, value} = e.target;
       dispatch({
@@ -46,7 +53,7 @@ const useActions = (useBlockSync = false) => {
     [dispatch]
   );
 
-  return {getRandomNumber, setTargetState};
+  return {getRandomNumber, changeStore};
 };
 
 export default useActions;
