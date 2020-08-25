@@ -1,6 +1,3 @@
-/**COMMON ACTION TYPE */
-export const SET_STATE = 'SET_STATE';
-
 export const GET_RANDOM_NUMBER = 'GET_RANDOM_NUMBER';
 export const GET_RANDOM_NUMBER_URL = (
   min = '1',

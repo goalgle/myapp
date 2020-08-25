@@ -1,10 +1,6 @@
 import {useCallback} from 'react';
 import {useDispatch} from 'react-redux';
-import {
-  GET_RANDOM_NUMBER,
-  GET_RANDOM_NUMBER_URL,
-  SET_STATE,
-} from './actionTypes';
+import {GET_RANDOM_NUMBER, GET_RANDOM_NUMBER_URL} from './actionTypes';
 import {axiosGet, axiosGetSync} from '../../lib/HttpUtils';
 
 /** action prefix
@@ -41,19 +37,7 @@ const useActions = (useBlockSync = false) => {
     [useBlockSync, dispatch]
   );
 
-  const changeStore = useCallback(
-    e => {
-      const {id, value} = e.target;
-      dispatch({
-        type: SET_STATE,
-        payload: {target: id, data: value},
-      });
-      return value;
-    },
-    [dispatch]
-  );
-
-  return {getRandomNumber, changeStore};
+  return {getRandomNumber};
 };
 
 export default useActions;

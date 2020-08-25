@@ -1,4 +1,4 @@
-import React, {useCallback, useState, useEffect} from 'react';
+import React, {useCallback} from 'react';
 import {
   useActions as useRandomActions,
   useRandomAPI as useRandomStore,
@@ -16,13 +16,6 @@ const Random = () => {
   /** GET REDUX ACTION - LOADING BAR or NOT*/
   const {getRandomNumber: getRandomNumWithBlock} = useRandomActions(true);
   const {getRandomNumber: getRandomNum} = useRandomActions();
-
-  /** SET REDUX ACTION */
-  const {changeStore} = useRandomActions();
-
-  /** PAGE STATE */
-  const [myage, setMyage] = useState(10);
-  const [name, setName] = useState('홍길동');
 
   /** NORMAL ASYNC MODE WITH PROMISE */
   const onClickAsyncButton = async () => {
@@ -76,25 +69,6 @@ const Random = () => {
         </div>
       )}
       {hasError && <div>Ups...</div>}
-      나이:
-      <input
-        id="myage"
-        type="text"
-        value={myage}
-        onChange={e => {
-          /**UPDATE REDUX STORE AND PAGE STATE */
-          setMyage(changeStore(e));
-        }}></input>
-      <p />
-      이름:
-      <input
-        id="name"
-        type="text"
-        value={name}
-        onChange={e => {
-          /**UPDATE REDUX STORE AND PAGE STATE */
-          setName(changeStore(e));
-        }}></input>
     </div>
   );
 };

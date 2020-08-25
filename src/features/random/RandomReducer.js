@@ -1,4 +1,4 @@
-import {GET_RANDOM_NUMBER, SET_STATE} from './actionTypes';
+import {GET_RANDOM_NUMBER} from './actionTypes';
 import ajaxState, {
   ajaxPending,
   ajaxFulfilled,
@@ -8,9 +8,6 @@ import ajaxState, {
 const initialState = {
   ...ajaxState,
   number: undefined,
-  lastName: '',
-  familyName: '김',
-  age: 0,
 };
 
 export default (state = initialState, action) => {
@@ -41,12 +38,6 @@ export default (state = initialState, action) => {
         ...state,
         number: action.payload.data,
         ...ajaxFulfilled(),
-      };
-
-    case SET_STATE:
-      return {
-        ...state,
-        [action.payload.target]: action.payload.data,
       };
 
     default:
