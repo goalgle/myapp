@@ -43,7 +43,9 @@ export default (state = initialState, action) =>
       }
       case UPDATE_LIST_ITEM_FIELD: {
         const target = action.payload.target.split('-');
-        draft[target[0]][[target[1]]][target[2]] = action.payload.data;
+        draft[target[0]][
+          draft[target[0]].findIndex(item => item.id === target[1])
+        ][target[2]] = action.payload.data;
         break;
       }
       default:
