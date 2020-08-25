@@ -1,6 +1,7 @@
 import React, {useState, useCallback} from 'react';
 import classes from '../Counter/Counter.module.css';
 import {useInputFormActions, useInputFormStore} from '../../features/inputform';
+import {nanoid} from 'nanoid';
 
 const InputForm = () => {
   /** DECLARE USAGE OF STORE */
@@ -25,7 +26,12 @@ const InputForm = () => {
     updateValue(e);
   };
   const onClickAddItem = e => {
-    insertListItem(e, {name: newName, age: newAge, home: newHome});
+    insertListItem(e, {
+      name: newName,
+      age: newAge,
+      home: newHome,
+      id: nanoid(),
+    });
     clearItemBucket();
   };
   const onClickRemoveItem = e => {
@@ -59,37 +65,35 @@ const InputForm = () => {
             </button>
           </>
         ))} */}
-        {objectList.map((item, idx) => {
-          return (
-            <>
-              <input
-                id={'objectList-' + idx + '-name'}
-                type="text"
-                width="30%"
-                value={item.name}
-                onChange={updateListItemField}
-              />
-              <input
-                id={'objectList-' + idx + '-age'}
-                type="text"
-                value={item.age}
-                onChange={updateListItemField}
-              />
-              <input
-                id={'objectList-' + idx + '-home'}
-                type="text"
-                value={item.home}
-                onChange={updateListItemField}
-              />
-              <button
-                type="button"
-                id={'objectList-' + idx}
-                onClick={onClickRemoveItem}>
-                삭제
-              </button>
-            </>
-          );
-        })}
+        {objectList.map(item => (
+          <div key={item.id}>
+            <input
+              id={'objectList-' + item.id + '-name'}
+              type="text"
+              width="30%"
+              value={item.name}
+              onChange={updateListItemField}
+            />
+            <input
+              id={'objectList-' + item.id + '-age'}
+              type="text"
+              value={item.age}
+              onChange={updateListItemField}
+            />
+            <input
+              id={'objectList-' + item.id + '-home'}
+              type="text"
+              value={item.home}
+              onChange={updateListItemField}
+            />
+            <button
+              type="button"
+              id={'objectList-' + item.id}
+              onClick={onClickRemoveItem}>
+              삭제
+            </button>
+          </div>
+        ))}
       </div>
       <input
         id="newName"
